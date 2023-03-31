@@ -1,9 +1,11 @@
-import { PageContainer } from "../../reusable/styles";
+import { PageContainer, PageNav } from "../../reusable/styles";
 
 const FlightsPage = () => {
   return (
     <PageContainer>
-      <h1>Flights</h1>
+      <PageNav>
+        <h1>Flights</h1>
+      </PageNav>
     </PageContainer>
   );
 };

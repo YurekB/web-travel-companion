@@ -11,6 +11,7 @@ export const SideBarContainer = styled.div`
     transition: 0.1s linear;
     padding: 10px;
     background-color: white;
+    margin: 0;
     margin-bottom: 30px;
     font-weight: 500;
     width: fit-content;
@@ -30,11 +31,11 @@ export const SideBarContainer = styled.div`
 `;
 
 export const Inner = styled.div`
-  margin: 10px 10px 10px 10px;
+  margin: 25px 10px 0px 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 98%;
+  height: calc(100% - 25px);
 `;
 
 export const LinksContainer = styled.div`

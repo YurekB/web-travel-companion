@@ -1,9 +1,11 @@
-import { PageContainer } from "../../reusable/styles";
+import { PageContainer, PageNav } from "../../reusable/styles";
 
 const BudgetPage = () => {
   return (
     <PageContainer>
-      <h1>Budget</h1>
+      <PageNav>
+        <h1>Budget</h1>
+      </PageNav>
     </PageContainer>
   );
 };
