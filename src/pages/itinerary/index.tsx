@@ -1,11 +1,11 @@
 import { PageContainer } from "../../reusable/styles";
 
-const HomePage = () => {
+const ItineraryPage = () => {
   return (
     <PageContainer>
-      <h1>Home</h1>
+      <h1>Itinerary</h1>
     </PageContainer>
   );
 };
 
-export default HomePage;
+export default ItineraryPage;

@@ -25,7 +25,10 @@ const SideBar = () => {
             <img src={img.houseIcon} onClick={() => navigate("/")} />
             <img src={img.palmIcon} onClick={() => navigate("/holidays")} />
             <img src={img.flightsIcon} onClick={() => navigate("/flights")} />
-            <img src={img.hotelIcon} onClick={() => navigate("/hotel")} />
+            <img
+              src={img.hotelIcon}
+              onClick={() => navigate("/accommodation")}
+            />
             <img src={img.taxiIcon} onClick={() => navigate("/transport")} />
             <img src={img.listIcon} onClick={() => navigate("/itinerary")} />
             <img src={img.moneyIcon} onClick={() => navigate("/budget")} />

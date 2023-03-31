@@ -1,7 +1,23 @@
+@import url("https://p.typekit.net/p.css?s=1&k=bkx3uli&ht=tk&f=16353.37462.37464.37466&a=41161691&app=typekit&e=css");
+
+* {
+  font-family: "Montserrat";
+  font-style: normal;
+}
+
 .App {
   display: flex;
   height: 100vh;
   width: 100vw;
   position: fixed;
   background: #f9f9f9;
+}
+
+h1 {
+  font-weight: 500;
+  color: #5e5e5e;
+  margin: 0;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #5e5e5e;
+  width: 100%;
 }

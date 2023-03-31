@@ -4,7 +4,6 @@ export const SideBarContainer = styled.div`
   background: linear-gradient(156.78deg, #4d9eff 15.32%, #686fff 85.25%);
   height: 100vh;
   width: fit-content;
-  margin-right: 5vw;
 
   p {
     border-radius: 10px;
