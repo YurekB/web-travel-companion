@@ -15,7 +15,7 @@ export const PageNav = styled.div`
 `;
 
 export const NavButton = styled.button`
-  border: 0;
+  border: 0.5px solid #5e5e5e;
   background: none;
   border-radius: 20px;
   padding: 0 15px;
@@ -30,46 +30,4 @@ export const NavButton = styled.button`
     cursor: pointer;
     background: rgba(195, 195, 195, 0.161);
   }
-`;
-
-interface modalOpen {
-  display: boolean;
-}
-
-export const Modal = styled.div<modalOpen>`
-  display: ${({ display }) => !display && "none"};
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  width: 700px;
-  border: 1px solid #5e5e5e;
-  padding: 20px 40px;
-  border-radius: 20px;
-
-  div {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  h2 {
-    font-weight: 500;
-    color: #5e5e5e;
-  }
-
-  h5 {
-    font-weight: 500;
-    border-radius: 20px;
-    padding: 3px 10px;
-    font-size: 20px;
-    width: fit-content;
-    :hover {
-      cursor: pointer;
-    }
-  }
-`;
-
-export const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
 `;

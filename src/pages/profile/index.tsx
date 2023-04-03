@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  Modal,
-  NavButton,
-  PageContainer,
-  PageNav,
-} from "../../reusable/styles";
-import ChangePasswordModal from "./modals/changePassword";
+import { NavButton, PageContainer, PageNav } from "../../reusable/styles";
 
 const ProfilePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -18,7 +12,6 @@ const ProfilePage = () => {
           Change Password
         </NavButton>
       </PageNav>
-      <ChangePasswordModal display={modalOpen} setModalOpen={setModalOpen} />
     </PageContainer>
   );
 };

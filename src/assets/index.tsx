@@ -6,6 +6,7 @@ import moneyIcon from "./moneyIcon.png";
 import taxiIcon from "./taxiIcon.png";
 import userIcon from "./userIcon.png";
 import palmIcon from "./palmIcon.png";
+import searchIcon from "./searchIcon.png";
 
 const img = {
   flightsIcon,
@@ -16,6 +17,7 @@ const img = {
   taxiIcon,
   userIcon,
   palmIcon,
+  searchIcon,
 };
 
 export default img;
