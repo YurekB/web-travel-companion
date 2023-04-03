@@ -27,12 +27,24 @@ const AddHolidayModal = ({ display, setModalOpen }: props) => {
     country: false,
     city: false,
   });
-
   const [holiday, setHoliday] = useState({
     title: "",
     country: "",
     city: "",
   });
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setHoliday({ title: "", country: "", city: "" });
+    setCountriesOpen(false);
+    setCountrySelected(false);
+    setCountryArr([]);
+    setErrorObj({
+      title: false,
+      country: false,
+      city: false,
+    });
+  };
 
   const countrySearch = async () => {
     const countryArr = await getCountries();
@@ -50,10 +62,14 @@ const AddHolidayModal = ({ display, setModalOpen }: props) => {
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setHoliday({ ...holiday, [e.target.id]: e.target.value });
+    if (e.target.id !== "country") {
+      setErrorObj({ ...errorObj, [e.target.id]: false });
+    }
   };
 
   const clickCountry = (e: React.MouseEvent<HTMLElement>) => {
     setHoliday({ ...holiday, country: (e.target as Element).innerHTML });
+    setErrorObj({ ...errorObj, country: false });
     setCountriesOpen(false);
     setCountrySelected(true);
   };
@@ -77,22 +93,10 @@ const AddHolidayModal = ({ display, setModalOpen }: props) => {
 
     setErrorObj(errObj);
 
-    if (Object.values(errObj).includes(true)) {
-      console.log("ERROR");
+    if (!Object.values(errObj).includes(true)) {
+      console.log("Successfully did nothing but its great");
+      closeModal();
     }
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-    setHoliday({ title: "", country: "", city: "" });
-    setCountriesOpen(false);
-    setCountrySelected(false);
-    setCountryArr([]);
-    setErrorObj({
-      title: false,
-      country: false,
-      city: false,
-    });
   };
 
   return (
