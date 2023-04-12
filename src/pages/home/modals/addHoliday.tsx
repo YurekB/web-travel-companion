@@ -11,7 +11,9 @@ import {
   SubmitButton,
   ErrorText,
 } from "../../../reusable/modalStyles";
-import getCountries from "../../../utils/getCountries";
+import getCities from "../../../utils/country/getCities";
+import getCountries from "../../../utils/country/getCountries";
+import postHoliday from "../../../utils/holidays/postHoliday";
 
 interface props {
   display: boolean;
@@ -20,8 +22,12 @@ interface props {
 
 const AddHolidayModal = ({ display, setModalOpen }: props) => {
   const [countryArr, setCountryArr] = useState<any[]>([]);
+  const [cityArr, setCityArr] = useState<any[]>([]);
   const [countriesOpen, setCountriesOpen] = useState<boolean>(false);
+  const [citiesOpen, setCitiesOpen] = useState<boolean>(false);
   const [countrySelected, setCountrySelected] = useState<boolean>(false);
+  const [citySelected, setCitySelected] = useState<boolean>(false);
+  const [countryErrText, setCountryErrText] = useState<string>("");
   const [errorObj, setErrorObj] = useState({
     title: false,
     country: false,
@@ -32,6 +38,8 @@ const AddHolidayModal = ({ display, setModalOpen }: props) => {
     country: "",
     city: "",
   });
+
+  //TODO ERROR IF I CLICK THE COUNTRY LIST OUTSIDE OF AN ACTUAL COUNTRY, IE CLICK THE PADDING
 
   const closeModal = () => {
     setModalOpen(false);
@@ -46,9 +54,13 @@ const AddHolidayModal = ({ display, setModalOpen }: props) => {
     });
   };
 
+  useEffect(() => {
+    getCities("Poland");
+  }, []);
+
   const countrySearch = async () => {
-    const countryArr = await getCountries();
-    const filteredArr = countryArr.filter((i: string) => {
+    const cityArr = await getCountries();
+    const filteredArr = cityArr.filter((i: string) => {
       if (i.toLowerCase().includes(holiday.country.toLowerCase())) {
         return i;
       } else return;
@@ -57,6 +69,8 @@ const AddHolidayModal = ({ display, setModalOpen }: props) => {
     if (filteredArr.length > 0) {
       setCountryArr(filteredArr);
       setCountriesOpen(true);
+    } else {
+      errorObj.city = true;
     }
   };
 
@@ -74,7 +88,7 @@ const AddHolidayModal = ({ display, setModalOpen }: props) => {
     setCountrySelected(true);
   };
 
-  const addHoliday = () => {
+  const addHoliday = async () => {
     const errObj = {
       title: false,
       country: false,
@@ -86,8 +100,9 @@ const AddHolidayModal = ({ display, setModalOpen }: props) => {
     }
     if (!countrySelected) {
       errObj.country = true;
+      setCountryErrText("Please search for and then select a country");
     }
-    if (holiday.city.length === 0) {
+    if (!citySelected && countrySelected) {
       errObj.city = true;
     }
 
@@ -95,8 +110,37 @@ const AddHolidayModal = ({ display, setModalOpen }: props) => {
 
     if (!Object.values(errObj).includes(true)) {
       console.log("Successfully did nothing but its great");
-      closeModal();
+      postHoliday(holiday)
+        .then((res: any) => {
+          console.log("Successfuly posted holiday");
+          closeModal();
+          window.location.reload();
+        })
+        .catch((err: any) => {
+          console.log("Sorry something went wrong");
+        });
     }
+  };
+
+  const citySearch = async () => {
+    const cityArr = await getCities(holiday.country);
+    const filteredArr = cityArr.filter((i: string) => {
+      if (i.toLowerCase().includes(holiday.city.toLowerCase())) {
+        return i;
+      } else return;
+    });
+
+    if (filteredArr.length > 0) {
+      setCityArr(filteredArr);
+      setCitiesOpen(true);
+    } else {
+    }
+  };
+
+  const clickCity = (e: React.MouseEvent<HTMLElement>) => {
+    setHoliday({ ...holiday, city: (e.target as Element).innerHTML });
+    setCitiesOpen(false);
+    setCitySelected(true);
   };
 
   return (
@@ -134,18 +178,32 @@ const AddHolidayModal = ({ display, setModalOpen }: props) => {
             return <li key={i}>{i}</li>;
           })}
         </CountriesList>
-        {errorObj.country ? (
-          <ErrorText>Please search for and then select a country</ErrorText>
+        {errorObj.country ? <ErrorText>{countryErrText}</ErrorText> : null}
+        {countrySelected ? (
+          <>
+            <InputContainer>
+              <label>City / Town</label>
+              <div>
+                <input
+                  id="city"
+                  value={holiday.city}
+                  onChange={onChange}
+                  maxLength={85}
+                />
+                <button onClick={citySearch}>
+                  <img src={img.searchIcon} />
+                  <p>Search</p>
+                </button>
+              </div>
+            </InputContainer>
+            <CountriesList onClick={clickCity} display={citiesOpen}>
+              {cityArr.sort().map((i: string) => {
+                return <li key={i}>{i}</li>;
+              })}
+            </CountriesList>
+          </>
         ) : null}
-        <InputContainer>
-          <label>City / Town</label>
-          <input
-            id="city"
-            value={holiday.city}
-            onChange={onChange}
-            maxLength={85}
-          />
-        </InputContainer>
+
         {errorObj.city ? (
           <ErrorText>
             Please enter the name of the place you are going
